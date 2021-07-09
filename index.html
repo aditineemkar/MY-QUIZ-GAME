@@ -1,52 +1,209 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
-	<title>Hit-The-Mouse</title>
-	<link rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,
+		initial-scale=1, shrink-to-fit=no">
 
-	<!-- Adding google fonts to our project
-		to set choosen font family -->
+	<title>Crack-The-Code Game</title>
+
+	<!-- Bootstrap CDN starts-->
+	<link rel="stylesheet" href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		crossorigin="anonymous">
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		crossorigin="anonymous">
+	</script>
+
+	<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		crossorigin="anonymous">
+	</script>
+	
+	<script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		crossorigin="anonymous">
+	</script>
+	<!-- Bootstrap CDN ends -->
+
+	<!-- Font Awesome kit --- for icons -->
+	<script src="https://kit.fontawesome.com/788fc8cac3.js"
+		crossorigin="anonymous">
+	</script>
+
+	<!-- Google font CDN for Yeon Sung font -->
+	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href=
-"https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap"
+"https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap"
 		rel="stylesheet">
-	<link rel="preconnect"
-		href="https://fonts.gstatic.com">
+	<!-- Google font CDN ends -->
+
+	<!-- Internal CSS -->
+	<style>
+		* {
+			font-family: 'Yeon Sung', cursive;
+		}
+
+		input {
+			width: 60px;
+			height: 40px;
+			border-radius: 5px;
+			text-align: center;
+		}
+	</style>
 </head>
 
 <body>
-	<div class="heading">
-		<h1>Hit the Mouse</h1>
-	</div>
 
-	<div class="score">
-		<h3>Points: <span>0</span></h3>
+	<!--Popup Modal -->
+	<div class="modal fade" id="popup" tabindex="-1"
+		role="dialog" aria-labelledby="popupLabel"
+		aria-hidden="true">
+		
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title text-danger
+						font-weight-bold" id="popupLabel">
+						Pop Up
+					</h5>
+					
+					<button type="button" class="close"
+						data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h3 id="result" class="text-center"></h3>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn
+						btn-secondary" data-dismiss="modal">
+						Close
+					</button>
+				</div>
+			</div>
+		</div>
 	</div>
+	<!-- Popup Modal -->
 
-	<div class="holes">
-		<div class="hole hole1"></div>
-		<div class="hole hole2"></div>
-		<div class="hole hole3"></div>
-		<div class="hole hole4"></div>
-		<div class="hole hole5"></div>
-	</div>
-	<div class="buttons">
-		<button class="button start">
-			START
-		</button>
+	<div class="container my-4">
+		<h1 class="text-center my-4"><i class="fas
+				fa-unlock-alt"></i> Crack The Code</h1>
 
-		<button class="button stop">
-			STOP
-		</button>
-	</div>
+		<!-- 3 input fields -->
+		<div class="text-center">
+			<input type="text" id="b1">
+			<input type="text" id="b2">
+			<input type="text" id="b3">
+			<br />
+			<!-- Button to check result -->
+			<button class="btn btn-secondary mt-4"
+				onclick="myfunc();">
+				<i class="fas fa-key"></i> Check
+			</button>
+		</div>
+		<hr>
 
-	<div class="hammer">
-		<img src=
-'https://media.geeksforgeeks.org/wp-content/uploads/20210302112037/hammer1.png'>
+		<!-- Hints starts -->
+		<div id="hints" class="row m-auto">
+			<div id="hintOne">
+				<div class="card m-4" style="width: 18rem;">
+					<div class="card-header card-title">
+						<h5 class="card-title text-center">
+							<i class="far fa-lightbulb"></i>
+							Hint #1
+						</h5>
+					</div>
+					<div class="card-body">
+						<p id="h1" class="text-center"></p>
+
+						<h5 class="text-center">
+							One Number is correct and
+							well placed
+						</h5>
+					</div>
+				</div>
+
+			</div>
+			<div id="hintTwo">
+				<div class="card m-4" style="width: 18rem;">
+					<div class="card-header card-title">
+						<h5 class="card-title text-center">
+							<i class="far fa-lightbulb"></i>
+							Hint #2
+						</h5>
+					</div>
+					<div class="card-body">
+						<p id="h2" class="text-center"></p>
+
+						<h5 class="text-center">
+							One Number is correct but wrong placed
+						</h5>
+					</div>
+				</div>
+			</div>
+			<div id="hintThree">
+				<div class="card m-4" style="width: 18rem;">
+					<div class="card-header card-title">
+						<h5 class="card-title text-center">
+							<i class="far fa-lightbulb"></i>
+							Hint #3
+						</h5>
+					</div>
+					<div class="card-body">
+						<p id="h3" class="text-center"></p>
+
+						<h5 class="text-center">
+							Two numbers are correct but
+							wrong placed
+						</h5>
+					</div>
+				</div>
+			</div>
+			<div id="hintFour">
+				<div class="card m-4" style="width: 18rem;">
+					<div class="card-header card-title">
+						<h5 class="card-title text-center">
+							<i class="far fa-lightbulb"></i>
+							Hint #4
+						</h5>
+					</div>
+					<div class="card-body">
+						<p id="h4" class="text-center"></p>
+
+						<h5 class="text-center">
+							Nothing is Correct
+						</h5>
+					</div>
+				</div>
+			</div>
+			<div id="hintFive">
+				<div class="card m-4" style="width: 18rem;">
+					<div class="card-header card-title">
+						<h5 class="card-title text-center">
+							<i class="far fa-lightbulb"></i>
+							Hint #5
+						</h5>
+					</div>
+					<div class="card-body">
+						<p id="h5" class="text-center"></p>
+
+						<h5 class="text-center">
+							One Number is correct but
+							wrong placed
+						</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Hints ends -->
+
 	</div>
-	
-	<!-- linking our js file -->
-	<script src="script.js"></script>
 </body>
+<!-- JavaScript file included -->
+<script src="script.js"></script>
 
 </html>
